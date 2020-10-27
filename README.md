@@ -2,7 +2,7 @@
 
 ---
 
-This is for projects of MA 510 course Numerical Methods, using MATLAB.
+This is for MATLAB projects of MA 510 course Numerical Methods.
 
 ### Covered topics:
 
