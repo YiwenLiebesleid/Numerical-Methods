@@ -15,3 +15,7 @@ This is for projects of MA 510 course Numerical Methods, using MATLAB.
 * Numerical solution of equation systems
 
 * Interpolation method
+
+* Spline method
+
+* Least squares
