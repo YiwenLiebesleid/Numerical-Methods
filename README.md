@@ -19,3 +19,5 @@ This is for MATLAB projects of MA 510 course Numerical Methods.
 * Spline method
 
 * Least squares
+
+* Numerical integration
