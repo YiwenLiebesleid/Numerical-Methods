@@ -21,3 +21,5 @@ This is for MATLAB projects of MA 510 course Numerical Methods.
 * Least squares
 
 * Numerical integration
+
+* IVPs
