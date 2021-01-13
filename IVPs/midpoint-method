@@ -1,0 +1,63 @@
+
+h = 1.0;
+r = 0.25;
+K = 120;
+P0 = 5;
+Solution = @(t) P0.*K ./ (P0+(K-P0).*exp(-r.*t));
+
+y_i = P0;
+f = @(P) r*P*(1-P/K);
+error15 = 0;
+y_i1 = y_i + h*f(y_i);
+results = [y_i, y_i1];
+for t = 2:1:40
+    y_i2 = y_i + 2*h*f(y_i1);
+    y_i = y_i1;
+    y_i1 = y_i2;
+    if t == 15
+        error15 = abs(y_i1 - Solution(15));
+        disp("h = 1, t = 15, absolute error: " + error15);
+    end
+    results(t+1) = y_i1;
+end
+
+figure(1);
+plot(X, Solution(X),'-r','LineWidth',1); hold on;
+plot(X, results,'-k','LineWidth',1); hold off;
+legend({'solution','approximation'},'Location', 'Southeast');
+
+X = [0:1:40];
+thres = 1e-6;
+result_set = {};
+i = 1;
+while i
+    t0 = cputime;
+    h = h / 10;
+    disp("h = " + h);
+    y_i = P0;
+    y_i1 = y_i + h*f(y_i);
+    result = [y_i, y_i1];
+    for t = 2:1:int64(40/h)
+        y_i2 = y_i + 2*h*f(y_i1);
+        y_i = y_i1;
+        y_i1 = y_i2;
+        if t == int64(15/h)
+            error15 = abs(y_i1 - Solution(15));
+            disp("t = 15, absolute error: " + error15);
+        end
+        result(t+1) = y_i;
+    end
+    disp("CPU time: " + string(cputime-t0));
+    result_set(i,:) = {result};
+    if error15 < thres
+        break;
+    end
+    i = i + 1;
+end
+
+for j = 1:1:i
+    figure(j+1);
+    plot(X, Solution(X),'-r','LineWidth',1); hold on;
+    plot([0:1/(10^j):40], result_set{j,1},'-k','LineWidth',1); hold off;
+    legend({'solution','approximation'},'Location', 'Southeast');
+end
